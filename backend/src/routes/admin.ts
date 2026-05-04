@@ -24,9 +24,9 @@ export const getSystemProjects = async (req: Request, res: Response) => {
       orderBy: { createdAt: 'desc' }
     });
 
-    const enrichedProjects = projects.map(p => {
-      const totalTasks = p.tasks.length;
-      const completedTasks = p.tasks.filter(t => t.status === 'DONE').length;
+    const enrichedProjects = projects.map((p: any) => {
+  const totalTasks = p.tasks.length;
+  const completedTasks = p.tasks.filter((t: any) => t.status === 'DONE').length;
       return {
         id: p.id,
         name: p.name,
