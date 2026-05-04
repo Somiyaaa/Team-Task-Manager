@@ -51,11 +51,11 @@ export const createTask = async (req: Request, res: Response) => {
 export const getTasks = async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user.id;
-    const { projectId } = req.query;
+    const projectId = req.query.projectId as string | undefined;
 
     const tasks = await prisma.task.findMany({
       where: {
-        ...(projectId ? { projectId: projectId as string } : {}),
+        ...(projectId ? { projectId } : {}),
         OR: [
           { project: { members: { some: { id: userId } } } },
           { assignedToId: userId }
@@ -77,7 +77,7 @@ export const getTasks = async (req: Request, res: Response) => {
 
 export const updateTaskStatus = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const { status } = updateTaskStatusSchema.parse(req.body);
 
     const task = await prisma.task.update({
@@ -93,7 +93,7 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
 
 export const deleteTask = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const currentUserId = (req as any).user.id;
     const currentUserRole = (req as any).user.role;
 

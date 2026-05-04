@@ -26,7 +26,7 @@ export const createProject = async (req: Request, res: Response) => {
     res.status(201).json(project);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: error.issues });;
+      return res.status(400).json({ error: error.issues });
     }
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -57,7 +57,7 @@ export const getProjects = async (req: Request, res: Response) => {
 
 export const getProjectById = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const userId = (req as any).user.id;
 
     const project = await prisma.project.findFirst({
@@ -90,12 +90,11 @@ export const getProjectById = async (req: Request, res: Response) => {
 
 export const addMember = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const { userId } = req.body;
+    const { id } = req.params as { id: string };
+    const { userId } = req.body as { userId: string };
     const currentUserId = (req as any).user.id;
     const currentUserRole = (req as any).user.role;
 
-    // Check if project exists
     const project = await prisma.project.findUnique({ where: { id } });
     if (!project) {
       return res.status(404).json({ error: 'Project not found' });
@@ -125,7 +124,7 @@ export const addMember = async (req: Request, res: Response) => {
 
 export const deleteProject = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { id } = req.params as { id: string };
     const currentUserId = (req as any).user.id;
     const currentUserRole = (req as any).user.role;
 
@@ -145,4 +144,3 @@ export const deleteProject = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
