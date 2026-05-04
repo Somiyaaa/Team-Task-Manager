@@ -40,8 +40,8 @@ export const createTask = async (req: Request, res: Response) => {
     res.status(201).json(task);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('Validation error:', error.errors);
-      return res.status(400).json({ error: error.errors });
+      console.error('Validation error:', error.issues);
+      return res.status(400).json({ error: error.issues });
     }
     console.error('Create task error:', error);
     res.status(500).json({ error: 'Internal server error' });

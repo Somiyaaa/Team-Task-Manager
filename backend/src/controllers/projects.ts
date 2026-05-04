@@ -26,7 +26,7 @@ export const createProject = async (req: Request, res: Response) => {
     res.status(201).json(project);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: error.errors });
+      return res.status(400).json({ error: error.issues });;
     }
     res.status(500).json({ error: 'Internal server error' });
   }
