@@ -11,10 +11,16 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+// ✅ Replace app.use(cors()) with this:
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.use(express.json());
 
-// ✅ Add this health check route
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'API is running' });
 });
@@ -25,8 +31,8 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/users', usersRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
