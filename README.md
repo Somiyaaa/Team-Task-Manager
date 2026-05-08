@@ -22,8 +22,3 @@ Backend: team-task-manager-production-696d.up.railway.app
 1. Clone repo
 2. Install dependencies
 3. Run frontend and backend
-5. Set your start command to: `npx prisma generate && npx prisma db push && npm run build && npm start`.
-   - Ensure `package.json` has `"start": "node dist/index.js"` and `"build": "tsc"`.
-- `GET/POST /api/projects` - Manage projects
-- `POST /api/projects/:id/members` - Add members to project
-- `GET/POST/PATCH/DELETE /api/tasks` - Manage tasks
