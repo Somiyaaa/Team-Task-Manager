@@ -124,8 +124,17 @@ export default function TasksPage() {
       <div className="bg-[#1f1f2e] rounded-2xl shadow-lg border border-white/5 overflow-hidden">
         {filteredTasks.length > 0 ? (
           <ul className="divide-y divide-white/5">
-            {filteredTasks.map((task) => (
-              <li key={task.id} className="p-4 hover:bg-[#2a2a3d] flex items-center justify-between transition group hover:scale-[1.01]">
+            {filteredTasks.map((task) => {
+              const isOverdue =
+              task.dueDate &&
+              new Date(task.dueDate) < new Date() &&
+              task.status !== "DONE";
+              return (
+              <li
+              key={task.id}
+              className={`p-4 flex items-center justify-between transition group hover:scale-[1.01]
+                ${isOverdue ? "border-l-4 border-rose-500 bg-[#2a1f2f]" : "hover:bg-[#2a2a3d]"}`}
+                >
                 <div className="flex items-start">
                   <button 
                     onClick={() => toggleTaskCompletion(task)}
@@ -167,7 +176,8 @@ export default function TasksPage() {
                   )}
                 </div>
               </li>
-            ))}
+              );
+            })}
           </ul>
         ) : (
           <div className="p-8 text-center text-gray-500">
