@@ -2,8 +2,6 @@
 
 A production-ready full-stack web application for managing projects, team members, and tasks with role-based access control.
 
-# Team Task Manager
-
 ## Features
 - User Authentication
 - Project & Task Management
