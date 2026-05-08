@@ -94,16 +94,16 @@ export default function TasksPage() {
   });
 
   return (
-    <div>
+    <div className="min-h-screen bg-[#0f0f17] text-white">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">All Tasks</h1>
+        <h1 className="text-2xl font-bold text-white">All Tasks</h1>
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
-            <label className="text-sm text-gray-500">Filter:</label>
+            <label className="text-sm text-gray-400">Filter:</label>
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="border-gray-300 rounded-md text-sm p-2 focus:ring-primary focus:border-primary border"
+              className="border border-white/10 rounded-md text-sm p-2 bg-[#0f0f17] text-white focus:ring-primary focus:border-primary"
             >
               <option value="ALL">All Status</option>
               <option value="TODO">Todo</option>
@@ -121,11 +121,11 @@ export default function TasksPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-[#1f1f2e] rounded-2xl shadow-lg border border-white/5 overflow-hidden">
         {filteredTasks.length > 0 ? (
-          <ul className="divide-y divide-gray-200">
+          <ul className="divide-y divide-white/5">
             {filteredTasks.map((task) => (
-              <li key={task.id} className="p-4 hover:bg-gray-50 flex items-center justify-between transition group">
+              <li key={task.id} className="p-4 hover:bg-[#2a2a3d] flex items-center justify-between transition group hover:scale-[1.01]">
                 <div className="flex items-start">
                   <button 
                     onClick={() => toggleTaskCompletion(task)}
@@ -135,8 +135,8 @@ export default function TasksPage() {
                     <CheckSquare className={`h-5 w-5 hover:text-primary transition ${task.status === 'DONE' ? 'text-emerald-500' : 'text-gray-300'}`} />
                   </button>
                   <div className="ml-3">
-                    <h4 className={`text-sm font-medium ${task.status === 'DONE' ? 'text-gray-500 line-through' : 'text-gray-900'}`}>{task.title}</h4>
-                    <div className="mt-1 flex items-center space-x-4 text-xs text-gray-500">
+                    <h4 className={`text-sm font-medium ${task.status === 'DONE' ? 'text-gray-500 line-through' : 'text-white'}`}>{task.title}</h4>
+                    <div className="mt-1 flex items-center space-x-4 text-xs text-gray-400">
                       <span>Project: {task.project?.name}</span>
                       {task.assignedTo && <span>Assignee: {task.assignedTo.name}</span>}
                       {task.dueDate && (
@@ -150,7 +150,7 @@ export default function TasksPage() {
                   <select
                     value={task.status}
                     onChange={(e) => updateTaskStatus(task.id, e.target.value)}
-                    className="text-xs border rounded p-1 bg-white focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="text-xs border border-white/10 rounded p-1 bg-[#0f0f17] text-white focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     <option value="TODO">TODO</option>
                     <option value="IN_PROGRESS">IN PROGRESS</option>
@@ -159,7 +159,7 @@ export default function TasksPage() {
                   {(user?.role === 'ADMIN' || task.project?.createdById === user?.id) && (
                     <button
                       onClick={() => handleDeleteTask(task.id)}
-                      className="p-1 text-gray-400 hover:text-red-600 rounded opacity-0 group-hover:opacity-100 transition"
+                      className="p-1 text-gray-500 hover:text-rose-400 rounded opacity-0 group-hover:opacity-100 transition"
                       title="Delete Task"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -171,7 +171,7 @@ export default function TasksPage() {
           </ul>
         ) : (
           <div className="p-8 text-center text-gray-500">
-            No tasks found.
+            No tasks yet 🚀 Create your first task!
           </div>
         )}
       </div>

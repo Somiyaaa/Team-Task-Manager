@@ -54,38 +54,49 @@ export default function Dashboard() {
   }, []);
 
   if (loading) {
-    return <div className="animate-pulse flex space-x-4">Loading stats...</div>;
+    return <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"> {[...Array(4)].map((_, i) => (
+        <div key={i} className="bg-[#1f1f2e] rounded-2xl p-6 animate-pulse h-24" />
+      ))}
+      </div>;
   }
 
   const statCards = [
-    { name: 'Total Tasks', value: stats.total, icon: ListTodo, color: 'text-blue-600', bg: 'bg-blue-100' },
+    { name: 'Total Tasks', value: stats.total, icon: ListTodo, color: 'text-blue-400', bg: 'bg-blue-500/10' },
     { name: 'Completed', value: stats.completed, icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-100' },
     { name: 'Pending', value: stats.pending, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-100' },
     { name: 'Overdue', value: stats.overdue, icon: AlertCircle, color: 'text-rose-600', bg: 'bg-rose-100' },
   ];
 
   return (
-    <div>
+    <div className="min-h-screen bg-[#0f0f17]">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, {user?.name}!</h1>
-        <p className="text-sm text-gray-500 mt-1">Here is what's happening with your projects today.</p>
+        <h1 className="text-2xl font-bold text-white">Welcome back, {user?.name}!</h1>
+        <p className="text-sm text-gray-400 mt-1">Here is what's happening with your tasks today.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.name} className="bg-white overflow-hidden shadow-sm rounded-lg border border-gray-100">
+            <div key={stat.name} className={`bg-[#1f1f2e] text-white rounded-2xl p-5 shadow-lg border border-white/5 hover:scale-105 transition duration-200 
+            ${stat.name === "Overdue" && stat.value > 0 ? "border-rose-500/40" : ""}`}
+            >
               <div className="p-5">
                 <div className="flex items-center">
-                  <div className={`flex-shrink-0 rounded-md p-3 ${stat.bg}`}>
+                  <div className={`flex-shrink-0 rounded-xl p-3 ${stat.bg} shadow-md`}>
                     <Icon className={`h-6 w-6 ${stat.color}`} aria-hidden="true" />
                   </div>
-                  <div className="ml-5 w-0 flex-1">
+                 <div className="ml-5 flex-1 space-y-1">
                     <dl>
-                      <dt className="text-sm font-medium text-gray-500 truncate">{stat.name}</dt>
+                      <dt className="text-sm font-medium text-gray-400 truncate">{stat.name}</dt>
                       <dd>
-                        <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+                        <div className={`text-3xl font-bold ${
+                          stat.name === "Overdue" && stat.value > 0
+                          ? "text-rose-400"
+                          : "text-blue-400"
+                          }`}>
+                            {stat.value}
+                            </div>
                       </dd>
                     </dl>
                   </div>
